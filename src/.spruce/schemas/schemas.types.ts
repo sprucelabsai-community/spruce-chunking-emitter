@@ -13,7 +13,7 @@ import * as SpruceSchema from '@sprucelabs/schema'
 declare module '@sprucelabs/spruce-core-schemas/build/.spruce/schemas/core.schemas.types' {
 
 
-	namespace SpruceSchemas.ChunkingEmitter.v2023_10_21 {
+	namespace SpruceSchemas.MercuryChunkingEmitter.v2023_10_21 {
 
 		
 		interface ChunkPaging {
@@ -27,7 +27,7 @@ declare module '@sprucelabs/spruce-core-schemas/build/.spruce/schemas/core.schem
 		interface ChunkPagingSchema extends SpruceSchema.Schema {
 			id: 'chunkPaging',
 			version: 'v2023_10_21',
-			namespace: 'ChunkingEmitter',
+			namespace: 'MercuryChunkingEmitter',
 			name: 'Chunk Paging',
 			    fields: {
 			            /** . */
@@ -45,7 +45,7 @@ declare module '@sprucelabs/spruce-core-schemas/build/.spruce/schemas/core.schem
 			    }
 		}
 
-		interface ChunkPagingEntity extends SchemaEntity<SpruceSchemas.ChunkingEmitter.v2023_10_21.ChunkPagingSchema> {}
+		interface ChunkPagingEntity extends SchemaEntity<SpruceSchemas.MercuryChunkingEmitter.v2023_10_21.ChunkPagingSchema> {}
 
 	}
 
