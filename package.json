@@ -6,6 +6,7 @@
     "!build/__tests__",
     "!build/esm/__tests__"
   ],
+  "types": "./build/index.d.ts",
   "scripts": {
     "build.ci": "yarn build.tsc && yarn build.resolve-paths && yarn lint",
     "build.dev": "yarn build.tsc --sourceMap ; yarn resolve-paths.lint",
@@ -55,7 +56,12 @@
   },
   "description": "Need to emit a ton of data!? Just chunk it!",
   "skill": {
-    "namespace": "chunking-emitter"
+    "namespace": "mercury-chunking-emitter",
+    "upgradeIgnoreList": [
+      "@sprucelabs/spruce-permission-plugin",
+      "@sprucelabs/mercury-core-events",
+      "@sprucelabs/spruce-event-plugin"
+    ]
   },
   "jest": {
     "testRunner": "jest-circus/runner",
@@ -77,13 +83,10 @@
   },
   "dependencies": {
     "@sprucelabs/mercury-client": "^41.0.109",
-    "@sprucelabs/mercury-core-events": "^22.0.105",
     "@sprucelabs/mercury-types": "^46.0.98",
     "@sprucelabs/schema": "^29.0.71",
     "@sprucelabs/spruce-core-schemas": "^39.0.104",
-    "@sprucelabs/spruce-event-plugin": "^60.0.136",
     "@sprucelabs/spruce-event-utils": "^38.0.114",
-    "@sprucelabs/spruce-permission-plugin": "^30.0.206",
     "@sprucelabs/spruce-skill-utils": "^30.0.54"
   }
 }
