@@ -1,13 +1,27 @@
 import { EventName } from '@sprucelabs/mercury-types'
+import {
+	FieldDefinitions,
+	SchemaFieldsByName,
+	buildSchema,
+} from '@sprucelabs/schema'
 import { fake } from '@sprucelabs/spruce-test-fixtures'
 import { test, assert, generateId } from '@sprucelabs/test-utils'
-import ChunkingEmitterImpl from '../../ChunkingEmitter'
-import MockChunkingEmitter from '../../MockChunkingEmitter'
+import { chunkFieldDefinition } from '../../chunkingEmitter/chunkFieldDefinition'
+import ChunkingEmitterImpl from '../../chunkingEmitter/ChunkingEmitter'
+import MockChunkingEmitter from '../../chunkingEmitter/MockChunkingEmitter'
 import AbstractChunkingEmitterTest from '../support/AbstractChunkingEmitterTest'
 
 @fake.login()
 export default class TestingChunkingEmitterTest extends AbstractChunkingEmitterTest {
 	protected static emitter: MockChunkingEmitter
+	private static readonly itemsField: FieldDefinitions = {
+		type: 'raw',
+		isArray: true,
+		options: {
+			valueType: 'any',
+		},
+	}
+
 	protected static async beforeEach(): Promise<void> {
 		await super.beforeEach()
 		ChunkingEmitterImpl.Class = MockChunkingEmitter
@@ -60,6 +74,83 @@ export default class TestingChunkingEmitterTest extends AbstractChunkingEmitterT
 		await this.emit()
 		assert.doesThrow(() => this.emitter.assertDidEmitPayloadKey('wrong'))
 		this.emitter.assertDidEmitPayloadKey(this.payloadKey)
+	}
+
+	@test()
+	protected static async throwsIfEventSignatureIsBad() {
+		const sigWithoutChunking = this.buildSignatureWithPayloadFields({
+			items: this.itemsField,
+		})
+
+		const sigWithChunking = this.buildSignatureWithPayloadFields({
+			items: this.itemsField,
+			chunk: chunkFieldDefinition(),
+		})
+
+		const fqenWithChunk = generateId() as EventName
+		this.mixinEventSignatures({
+			[this.fqen]: sigWithoutChunking,
+			[fqenWithChunk]: sigWithChunking,
+		})
+
+		const fqen = this.fqen
+		this.assertSignatureDoesNotConformToChunk(fqen)
+		this.assertSignatureDoesConfirmToChunk(fqenWithChunk)
+	}
+
+	@test()
+	protected static async throwsIfChunkIsThereButBad() {
+		this.assertChunkFieldThrowsWithBadMatch({
+			type: 'number',
+		})
+		this.assertChunkFieldThrowsWithBadMatch({
+			type: 'schema',
+			options: {
+				schema: buildSchema({
+					id: generateId(),
+					fields: {
+						test: {
+							type: 'number',
+						},
+					},
+				}),
+			},
+		})
+	}
+
+	private static assertChunkFieldThrowsWithBadMatch(
+		chunkSig: FieldDefinitions
+	) {
+		const fqen = generateId() as EventName
+		const sig = this.buildSignatureWithPayloadFields({
+			items: this.itemsField,
+			chunk: chunkSig,
+		})
+
+		this.mixinEventSignatures({
+			[fqen]: sig,
+		})
+
+		this.assertSignatureDoesNotConformToChunk(fqen)
+	}
+
+	private static assertSignatureDoesConfirmToChunk(fqenWithChunk: EventName) {
+		this.emitter.assertEventHonorsChunkingSignature(fqenWithChunk)
+	}
+
+	private static assertSignatureDoesNotConformToChunk(fqen: EventName) {
+		assert.doesThrow(() =>
+			this.emitter.assertEventHonorsChunkingSignature(fqen)
+		)
+	}
+
+	private static buildSignatureWithPayloadFields(fields: SchemaFieldsByName) {
+		return this.buildSignature(
+			buildSchema({
+				id: generateId(),
+				fields,
+			})
+		)
 	}
 
 	private static assertDidEmitItemsThrows(items: { id: string }[]) {

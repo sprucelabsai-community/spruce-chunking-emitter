@@ -1,3 +1,3 @@
-import { ChunkingEmitter } from './ChunkingEmitter'
+import { ChunkingEmitter } from './chunkingEmitter/ChunkingEmitter'
 export default ChunkingEmitter
-export { default as MockChunkingEmitter } from './MockChunkingEmitter'
+export { default as MockChunkingEmitter } from './chunkingEmitter/MockChunkingEmitter'

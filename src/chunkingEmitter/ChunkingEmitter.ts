@@ -7,7 +7,7 @@ export default class ChunkingEmitterImpl {
 	private client: MercuryClient
 	private chunkSize: number
 	private log = buildLog('ChunkingEmitter')
-	public static Class: new (options: ChunkingEmitterOptions) => ChunkingEmitter
+	public static Class?: new (options: ChunkingEmitterOptions) => ChunkingEmitter
 
 	private constructor(options: ChunkingEmitterOptions) {
 		const { client, chunkSize } = assertOptions(options, ['client'])
@@ -21,21 +21,35 @@ export default class ChunkingEmitterImpl {
 	}
 
 	public async emit(options: ChunkingEmitterEmitOptions) {
-		const { eventName, items, payloadKey } = assertOptions(options, [
+		const { eventName, items, payloadKey, target } = assertOptions(options, [
 			'eventName',
 			'items',
 			'payloadKey',
 		])
 
 		const chunks = this.splitItemsIntoChunks(items)
+		let current = 0
 
 		for (const chunk of chunks) {
 			try {
-				await this.client.emitAndFlattenResponses(eventName as EventName, {
+				let targetAndPayload: Record<string, any> = {
 					payload: {
 						[payloadKey]: chunk,
+						chunk: {
+							current: current++,
+							total: chunks.length,
+						},
 					},
-				})
+				}
+
+				if (target) {
+					targetAndPayload.target = target
+				}
+
+				await this.client.emitAndFlattenResponses(
+					eventName as EventName,
+					targetAndPayload
+				)
 			} catch (err: any) {
 				this.log.error('Failed to emit chunk', err)
 			}
@@ -46,8 +60,8 @@ export default class ChunkingEmitterImpl {
 		this.Class = undefined
 	}
 
-	private splitItemsIntoChunks(items: Record<string, unknown>[]) {
-		const chunks: Record<string, unknown>[][] = []
+	private splitItemsIntoChunks(items: Record<string, any>[]) {
+		const chunks: Record<string, any>[][] = []
 
 		let index = 0
 
@@ -79,8 +93,9 @@ interface ChunkingEmitterOptions {
 
 type ChunkingEmitterEmitOptions = {
 	eventName: EventName
-	items: Record<string, unknown>[]
+	items: Record<string, any>[]
 	payloadKey: string
+	target?: Record<string, any>
 }
 
 export interface ChunkingEmitter {

@@ -1,5 +1,7 @@
+import { MercuryTestClient } from '@sprucelabs/mercury-client'
 import { EventName } from '@sprucelabs/mercury-types'
 import { assert } from '@sprucelabs/test-utils'
+import { chunkFieldDefinition } from './chunkFieldDefinition'
 import { ChunkingEmitter } from './ChunkingEmitter'
 
 export default class MockChunkingEmitter implements ChunkingEmitter {
@@ -59,6 +61,24 @@ export default class MockChunkingEmitter implements ChunkingEmitter {
 			`I expected chunkingEmitter to emit '${fqen}'! But you emitted ${
 				this.emittedEventName || 'nothing'
 			}`
+		)
+	}
+
+	public assertEventHonorsChunkingSignature(fqen: EventName) {
+		const emitter = MercuryTestClient.getInternalEmitter()
+		const contract = emitter.getContract()
+		const payload = contract.eventSignatures[fqen]?.emitPayloadSchema?.fields
+		// @ts-ignore
+		const chunkField = payload?.payload?.options?.schema?.fields?.chunk
+		assert.isTruthy(
+			chunkField,
+			'Your event does not conform to the chunking signature. Please add a chunk field to your event payload. Add a field to your payload called chunk: chunkFieldDefinition()'
+		)
+
+		assert.isEqualDeep(
+			chunkField,
+			chunkFieldDefinition(),
+			'Your chunk field is there but not properly formed. Use chunkFieldDefinition() to define it.'
 		)
 	}
 }
