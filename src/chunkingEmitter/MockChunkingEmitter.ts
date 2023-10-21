@@ -18,7 +18,7 @@ export default class MockChunkingEmitter implements ChunkingEmitter {
 	public static getLastInstance() {
 		assert.isTruthy(
 			this.lastInstance,
-			'You have not constructed a ChunkingEmitter! Try ChunkingEmitterImpl.Emitter({})'
+			'You have not constructed a ChunkingEmitter! Make sure you set ChunkingEmitterImpl.Class = MockChunkingEmitter in your beforeEach() and then ChunkingEmitterImpl.Emitter({}) in your production code somewhere!'
 		)
 		return this.lastInstance
 	}
