@@ -39,8 +39,10 @@ export default class TestingChunkingEmitterTest extends AbstractChunkingEmitterT
 	@test()
 	protected static async knowsIfWasHit() {
 		assert.doesThrow(() => this.emitter.assertDidEmit())
+		this.emitter.assertDidNotEmit()
 		await this.emit()
 		this.emitter.assertDidEmit()
+		assert.doesThrow(() => this.emitter.assertDidNotEmit())
 	}
 
 	@test()
@@ -49,6 +51,7 @@ export default class TestingChunkingEmitterTest extends AbstractChunkingEmitterT
 		assert.doesThrow(() =>
 			this.emitter.assertDidEmitEventNamed(generateId() as EventName)
 		)
+
 		this.emitter.assertDidEmitEventNamed(this.fqen)
 	}
 

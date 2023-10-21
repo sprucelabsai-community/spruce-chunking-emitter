@@ -98,4 +98,11 @@ export default class MockChunkingEmitter implements ChunkingEmitter {
 			'Your chunk field is there but not properly formed. Use chunkFieldDefinition() to define it.'
 		)
 	}
+
+	public assertDidNotEmit() {
+		assert.isFalse(
+			this.didEmit,
+			`You called chunkingEmitter.emit(...) but you should not have!`
+		)
+	}
 }
