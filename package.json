@@ -1,5 +1,5 @@
 {
-  "name": "@sprucelabs/chunking-emitter",
+  "name": "@sprucelabs/spruce-chunking-emitter",
   "version": "1.0.3",
   "scripts": {
     "build.ci": "yarn build.tsc && yarn build.resolve-paths && yarn lint",
