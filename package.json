@@ -1,6 +1,11 @@
 {
   "name": "@sprucelabs/mercury-chunking-emitter",
-  "version": "1.1.0",
+  "version": "1.1.2",
+  "files": [
+    "build/**/*",
+    "!build/__tests__",
+    "!build/esm/__tests__"
+  ],
   "scripts": {
     "build.ci": "yarn build.tsc && yarn build.resolve-paths && yarn lint",
     "build.dev": "yarn build.tsc --sourceMap ; yarn resolve-paths.lint",
