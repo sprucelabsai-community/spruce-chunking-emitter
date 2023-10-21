@@ -45,7 +45,8 @@
     "ts-node": "^10.9.1",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.2.2",
-    "@sprucelabs/esm-postbuild": "^5.0.83"
+    "@sprucelabs/esm-postbuild": "^5.0.83",
+    "@sprucelabs/semantic-release": "^4.0.8"
   },
   "description": "Need to emit a ton of data!? Just chunk it!",
   "skill": {
