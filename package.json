@@ -1,5 +1,5 @@
 {
-  "name": "chunking-emitter",
+  "name": "@sprucelabsai-community/chunking-emitter",
   "version": "0.0.1",
   "scripts": {
     "build.ci": "yarn build.tsc && yarn build.resolve-paths && yarn lint",
@@ -7,7 +7,10 @@
     "build.copy-files": "mkdir -p build && rsync -avzq --exclude='*.ts' ./src/ ./build/",
     "build.resolve-paths": "resolve-path-aliases --target build --patterns '**/*.js,**/*.d.ts'",
     "build.tsc": "yarn build.copy-files && tsc",
+    "build.esm-postbuild": "esm-postbuild --target esm --patterns '**/*.js'",
+    "build.dist": "tsc --project tsconfig.dist.json && yarn build.resolve-paths && mv build esm && yarn build.esm-postbuild && yarn build.tsc && yarn build.resolve-paths && mv esm build/ && yarn clean.dist",
     "clean": "yarn clean.build",
+    "clean.dist": "rm -rf build/__tests__ build/esm/__tests__",
     "clean.all": "yarn clean.dependencies && yarn clean.build",
     "clean.build": "rm -rf build/",
     "clean.dependencies": "rm -rf node_modules/ package-lock.json yarn.lock",
@@ -19,7 +22,6 @@
     "update.dependencies": "yarn clean.dependencies && yarn",
     "resolve-paths.lint": "yarn build.resolve-paths ; yarn lint",
     "test": "jest",
-    "build.dist": "tsc --project tsconfig.dist.json && yarn build.resolve-paths && mv build esm && yarn build.esm-postbuild && yarn build.tsc && yarn build.resolve-paths && mv esm build/ && yarn clean.dist",
     "watch.build.dev": "tsc-watch --sourceMap --onCompilationComplete 'yarn post.watch.build'",
     "watch.lint": "concurrently 'yarn lint' \"chokidar 'src/**/*' -c 'yarn lint.tsc'\"",
     "watch.rebuild": "yarn clean.all && yarn && yarn watch.build.dev",
@@ -41,7 +43,8 @@
     "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
     "tsc-watch": "^6.0.4",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "@sprucelabs/esm-postbuild": "^5.0.83"
   },
   "description": "Need to emit a ton of data!? Just chunk it!",
   "skill": {
