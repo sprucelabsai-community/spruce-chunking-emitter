@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v1.1.5...v1.2.0) (2023-10-21)
+
+
+### Features
+
+* can assert did not emit ([7338ac6](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/7338ac6))
+
 ## [1.1.5](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v1.1.4...v1.1.5) (2023-10-21)
 
 ## [1.1.4](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v1.1.3...v1.1.4) (2023-10-21)
