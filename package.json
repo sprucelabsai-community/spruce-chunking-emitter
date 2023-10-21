@@ -6,7 +6,11 @@
     "!build/__tests__",
     "!build/esm/__tests__"
   ],
+  "main": "./build/index.js",
   "types": "./build/index.d.ts",
+  "module": "./build/esm/index.js",
+  "sideEffects": false,
+  "license": "MIT",
   "scripts": {
     "build.ci": "yarn build.tsc && yarn build.resolve-paths && yarn lint",
     "build.dev": "yarn build.tsc --sourceMap ; yarn resolve-paths.lint",
