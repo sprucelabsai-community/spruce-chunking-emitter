@@ -11,7 +11,7 @@ export default class ChunkingEmitterTest extends AbstractChunkingEmitterTest {
 	private static fqen2: EventName
 	private static allTargetAndPayloads: any[] = []
 	private static hitCount: number
-
+	protected static emitter: SpyEmitter
 	private static readonly itemFieldDefinition: FieldDefinitions = {
 		type: 'raw',
 		isArray: true,
@@ -22,6 +22,8 @@ export default class ChunkingEmitterTest extends AbstractChunkingEmitterTest {
 
 	protected static async beforeEach() {
 		await super.beforeEach()
+
+		ChunkingEmitterImpl.Class = SpyEmitter
 
 		this.hitCount = 0
 		this.fqen = 'test.test::v2021_01_01' as EventName
@@ -124,7 +126,14 @@ export default class ChunkingEmitterTest extends AbstractChunkingEmitterTest {
 
 		await this.emitWithTotalItems(10)
 		assert.isEqual(hitCount, 10)
-		assert.isEqual(this.emitter.getTotalErrors(), 1)
+		this.assertTotalErrors(1)
+	}
+
+	@test()
+	protected static async accuratelyTracksTotalErrors() {
+		await this.makeEventThrow()
+		await this.assertEveryEmitErrors()
+		await this.assertEveryEmitErrors()
 	}
 
 	@test()
@@ -186,6 +195,25 @@ export default class ChunkingEmitterTest extends AbstractChunkingEmitterTest {
 		assert.isEqualDeep(passedTarget, target)
 	}
 
+	@test()
+	protected static async defaultsToChunkSizeOfTen() {
+		this.emitter = (await ChunkingEmitterImpl.Emitter({
+			client: this.fakedClient,
+		})) as SpyEmitter
+
+		assert.isEqualDeep(this.emitter.getChunkSize(), 10)
+	}
+
+	private static async makeEventThrow() {
+		await eventFaker.on(this.fqen, () => {
+			throw new Error('Failed')
+		})
+	}
+
+	private static assertTotalErrors(expected: number) {
+		assert.isEqual(this.emitter.getTotalErrors(), expected)
+	}
+
 	private static assertTotalEmits(total: number) {
 		assert.isEqual(this.hitCount, total)
 	}
@@ -201,10 +229,10 @@ export default class ChunkingEmitterTest extends AbstractChunkingEmitterTest {
 	}
 
 	private static async resetEmitterWithChunkSize(chunkSize: number) {
-		this.emitter = await ChunkingEmitterImpl.Emitter({
+		this.emitter = (await ChunkingEmitterImpl.Emitter({
 			client: this.fakedClient,
 			chunkSize,
-		})
+		})) as SpyEmitter
 	}
 
 	private static async emitWithOneItem(target?: Record<string, any>) {
@@ -238,11 +266,25 @@ export default class ChunkingEmitterTest extends AbstractChunkingEmitterTest {
 		return this.buildSignature(payload)
 	}
 
+	private static async assertEveryEmitErrors() {
+		await this.emitWithTotalItems(10)
+		this.assertTotalErrors(10)
+	}
+
 	private static get lastTargetAndPayload() {
 		return this.allTargetAndPayloads[this.allTargetAndPayloads.length - 1]
 	}
 
 	private static get wasEventEmitted() {
 		return this.hitCount > 0
+	}
+}
+
+class SpyEmitter extends ChunkingEmitterImpl {
+	public constructor(options: any) {
+		super(options)
+	}
+	public getChunkSize() {
+		return this.chunkSize
 	}
 }

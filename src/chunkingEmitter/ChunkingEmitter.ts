@@ -5,14 +5,15 @@ import { buildLog } from '@sprucelabs/spruce-skill-utils'
 
 export default class ChunkingEmitterImpl {
 	private client: MercuryClient
-	private chunkSize: number
+	protected chunkSize: number
 	private log = buildLog('ChunkingEmitter')
 	public static Class?: new (options: ChunkingEmitterOptions) => ChunkingEmitter
+	private totalErrors = 0
 
-	private constructor(options: ChunkingEmitterOptions) {
+	protected constructor(options: ChunkingEmitterOptions) {
 		const { client, chunkSize } = assertOptions(options, ['client'])
 		this.client = client
-		this.chunkSize = chunkSize ?? 100
+		this.chunkSize = chunkSize ?? 10
 	}
 
 	public static async Emitter(options: ChunkingEmitterOptions) {
@@ -27,6 +28,7 @@ export default class ChunkingEmitterImpl {
 			'payloadKey',
 		])
 
+		this.totalErrors = 0
 		const chunks = this.splitItemsIntoChunks(items)
 		let current = 0
 
@@ -52,6 +54,7 @@ export default class ChunkingEmitterImpl {
 				)
 			} catch (err: any) {
 				this.log.error('Failed to emit chunk', err)
+				this.totalErrors++
 			}
 		}
 	}
@@ -82,7 +85,7 @@ export default class ChunkingEmitterImpl {
 	}
 
 	public getTotalErrors(): number {
-		return 1
+		return this.totalErrors
 	}
 }
 
