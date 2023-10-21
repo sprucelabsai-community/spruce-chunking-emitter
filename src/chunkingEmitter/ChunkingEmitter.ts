@@ -94,7 +94,7 @@ interface ChunkingEmitterOptions {
 	chunkSize?: number
 }
 
-type ChunkingEmitterEmitOptions = {
+export type ChunkingEmitterEmitOptions = {
 	eventName: EventName
 	items: Record<string, any>[]
 	payloadKey: string

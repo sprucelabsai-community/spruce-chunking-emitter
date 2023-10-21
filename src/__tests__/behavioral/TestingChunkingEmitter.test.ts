@@ -132,6 +132,26 @@ export default class TestingChunkingEmitterTest extends AbstractChunkingEmitterT
 		assert.doesThrow(() => MockChunkingEmitter.getLastInstance())
 	}
 
+	@test()
+	protected static async assertsTarget() {
+		const target = {
+			organizationId: generateId(),
+			userId: generateId(),
+		}
+
+		this.assertDidNotEmitWithTarget(target)
+		await this.emit(target)
+		this.emitter.assertDidEmitTarget(target)
+		this.assertDidNotEmitWithTarget({
+			organizationId: generateId(),
+			userId: generateId(),
+		})
+	}
+
+	private static assertDidNotEmitWithTarget(target: Record<string, any>) {
+		assert.doesThrow(() => this.emitter.assertDidEmitTarget(target))
+	}
+
 	private static assertChunkFieldThrowsWithBadMatch(
 		chunkSig: FieldDefinitions
 	) {
@@ -171,7 +191,7 @@ export default class TestingChunkingEmitterTest extends AbstractChunkingEmitterT
 		assert.doesThrow(() => this.emitter.assertEmittedItems(items))
 	}
 
-	private static async emit() {
-		return this.emitWithItems([this.generateItem()])
+	private static async emit(target?: Record<string, any>) {
+		return this.emitWithItems([this.generateItem()], target)
 	}
 }

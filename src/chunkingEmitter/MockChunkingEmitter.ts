@@ -2,7 +2,7 @@ import { MercuryTestClient } from '@sprucelabs/mercury-client'
 import { EventName } from '@sprucelabs/mercury-types'
 import { assert } from '@sprucelabs/test-utils'
 import { chunkFieldDefinition } from './chunkFieldDefinition'
-import { ChunkingEmitter } from './ChunkingEmitter'
+import { ChunkingEmitter, ChunkingEmitterEmitOptions } from './ChunkingEmitter'
 
 export default class MockChunkingEmitter implements ChunkingEmitter {
 	private didEmit = false
@@ -10,6 +10,7 @@ export default class MockChunkingEmitter implements ChunkingEmitter {
 	private emittedItems?: Record<string, unknown>[]
 	private emittedPayloadKey?: string
 	public static lastInstance?: MockChunkingEmitter
+	private emittedTarget?: Record<string, any>
 
 	public constructor() {
 		MockChunkingEmitter.lastInstance = this
@@ -27,16 +28,21 @@ export default class MockChunkingEmitter implements ChunkingEmitter {
 		this.lastInstance = undefined
 	}
 
-	public async emit(options: {
-		eventName: EventName
-		items: Record<string, unknown>[]
-		payloadKey: string
-	}): Promise<void> {
-		const { eventName, items, payloadKey } = options
+	public async emit(options: ChunkingEmitterEmitOptions): Promise<void> {
+		const { eventName, items, payloadKey, target } = options
 		this.didEmit = true
 		this.emittedEventName = eventName
 		this.emittedItems = items
 		this.emittedPayloadKey = payloadKey
+		this.emittedTarget = target
+	}
+
+	public assertDidEmitTarget(target: Record<string, any>) {
+		assert.isEqualDeep(
+			this.emittedTarget,
+			target,
+			'You did not chunkingEmitter.emit(...) the expected target!'
+		)
 	}
 
 	public assertDidEmitPayloadKey(payloadKey: string) {
