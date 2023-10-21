@@ -9,6 +9,23 @@ export default class MockChunkingEmitter implements ChunkingEmitter {
 	private emittedEventName?: EventName
 	private emittedItems?: Record<string, unknown>[]
 	private emittedPayloadKey?: string
+	public static lastInstance?: MockChunkingEmitter
+
+	public constructor() {
+		MockChunkingEmitter.lastInstance = this
+	}
+
+	public static getLastInstance() {
+		assert.isTruthy(
+			this.lastInstance,
+			'You have not constructed a ChunkingEmitter! Try ChunkingEmitterImpl.Emitter({})'
+		)
+		return this.lastInstance
+	}
+
+	public static reset() {
+		this.lastInstance = undefined
+	}
 
 	public async emit(options: {
 		eventName: EventName

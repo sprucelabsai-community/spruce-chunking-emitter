@@ -118,6 +118,17 @@ export default class TestingChunkingEmitterTest extends AbstractChunkingEmitterT
 		})
 	}
 
+	@test()
+	protected static async canGetMockInstance() {
+		assert.isEqual(MockChunkingEmitter.getLastInstance(), this.emitter)
+	}
+
+	@test()
+	protected static async throwsIfNoInstance() {
+		MockChunkingEmitter.reset()
+		assert.doesThrow(() => MockChunkingEmitter.getLastInstance())
+	}
+
 	private static assertChunkFieldThrowsWithBadMatch(
 		chunkSig: FieldDefinitions
 	) {
