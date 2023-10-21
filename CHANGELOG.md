@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v1.2.0...v1.3.0) (2023-10-21)
+
+
+### Features
+
+* can assert target ([1442d31](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/1442d31))
+
 # [1.2.0](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v1.1.5...v1.2.0) (2023-10-21)
 
 
