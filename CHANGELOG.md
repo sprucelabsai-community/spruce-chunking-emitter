@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v1.0.5...v1.1.0) (2023-10-21)
+
+
+### Features
+
+* mock chunk fix ([1fdee23](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/1fdee23))
+
 ## [1.0.5](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v1.0.4...v1.0.5) (2023-10-21)
 
 ## [1.0.4](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v1.0.3...v1.0.4) (2023-10-21)
