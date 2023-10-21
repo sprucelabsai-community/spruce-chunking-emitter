@@ -1,10 +1,12 @@
 import { MercuryClient } from '@sprucelabs/mercury-client'
 import { EventName } from '@sprucelabs/mercury-types'
 import { assertOptions } from '@sprucelabs/schema'
+import { buildLog } from '@sprucelabs/spruce-skill-utils'
 
 export default class ChunkingEmitter {
 	private client: MercuryClient
 	private chunkSize: number
+	private log = buildLog('ChunkingEmitter')
 
 	private constructor(options: ChunkingEmitterOptions) {
 		const { client, chunkSize } = assertOptions(options, ['client'])
@@ -33,7 +35,9 @@ export default class ChunkingEmitter {
 						[payloadKey]: chunk,
 					},
 				})
-			} catch {}
+			} catch (err: any) {
+				this.log.error('Failed to emit chunk', err)
+			}
 		}
 	}
 
