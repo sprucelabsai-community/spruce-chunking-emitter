@@ -1,0 +1,14 @@
+{
+  "scriptUpdater": {
+    "skipped": []
+  },
+  "skipped": [
+    "skill"
+  ],
+  "installed": [
+    "test",
+    "schema",
+    "permission",
+    "event"
+  ]
+}
