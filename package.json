@@ -25,7 +25,8 @@
     "watch.build.dev": "tsc-watch --sourceMap --onCompilationComplete 'yarn post.watch.build'",
     "watch.lint": "concurrently 'yarn lint' \"chokidar 'src/**/*' -c 'yarn lint.tsc'\"",
     "watch.rebuild": "yarn clean.all && yarn && yarn watch.build.dev",
-    "watch.tsc": "tsc -w"
+    "watch.tsc": "tsc -w",
+    "release": "semantic-release"
   },
   "devDependencies": {
     "@sprucelabs/jest-json-reporter": "^7.0.110",
