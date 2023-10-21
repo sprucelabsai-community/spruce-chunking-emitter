@@ -3,20 +3,14 @@ import { EventName } from '@sprucelabs/mercury-types'
 import { buildSchema } from '@sprucelabs/schema'
 import { buildEmitTargetAndPayloadSchema } from '@sprucelabs/spruce-event-utils'
 import { eventFaker, fake } from '@sprucelabs/spruce-test-fixtures'
-import { AbstractSpruceFixtureTest } from '@sprucelabs/spruce-test-fixtures'
 import { test, assert, errorAssert, generateId } from '@sprucelabs/test-utils'
-import ChunkingEmitter from '../../ChunkingEmitter'
+import ChunkingEmitterImpl from '../../ChunkingEmitter'
+import AbstractChunkingEmitterTest from '../support/AbstractChunkingEmitterTest'
 
 @fake.login()
-export default class ChunkingEmitterTest extends AbstractSpruceFixtureTest {
-	private static emitter: ChunkingEmitter
-	private static fqen: EventName
+export default class ChunkingEmitterTest extends AbstractChunkingEmitterTest {
 	private static fqen2: EventName
-
-	private static payloadKey: string
-
 	private static allTargetAndPayloads: any[] = []
-
 	private static hitCount: number
 
 	protected static async beforeEach() {
@@ -25,7 +19,7 @@ export default class ChunkingEmitterTest extends AbstractSpruceFixtureTest {
 		this.hitCount = 0
 		this.fqen = 'test.test::v2021_01_01' as EventName
 		this.fqen2 = 'test2.test3::v2022_02_02' as EventName
-		this.payloadKey = 'items'
+
 		this.allTargetAndPayloads = []
 
 		this.mixinTestContract()
@@ -41,7 +35,7 @@ export default class ChunkingEmitterTest extends AbstractSpruceFixtureTest {
 	@test()
 	protected static async throwsWithMissing() {
 		//@ts-ignore
-		const err = await assert.doesThrowAsync(() => ChunkingEmitter.Emitter())
+		const err = await assert.doesThrowAsync(() => ChunkingEmitterImpl.Emitter())
 		errorAssert.assertError(err, 'MISSING_PARAMETERS', {
 			parameters: ['client'],
 		})
@@ -141,7 +135,7 @@ export default class ChunkingEmitterTest extends AbstractSpruceFixtureTest {
 	}
 
 	private static async resetEmitterWithChunkSize(chunkSize: number) {
-		this.emitter = await ChunkingEmitter.Emitter({
+		this.emitter = await ChunkingEmitterImpl.Emitter({
 			client: this.fakedClient,
 			chunkSize,
 		})
@@ -153,20 +147,8 @@ export default class ChunkingEmitterTest extends AbstractSpruceFixtureTest {
 		return items[0]
 	}
 
-	private static generateItem() {
-		return { id: generateId() }
-	}
-
 	private static get passedPayload() {
 		return this.lastTargetAndPayload?.payload
-	}
-
-	private static async emitWithItems(items: Record<string, unknown>[]) {
-		await this.emitter.emit({
-			eventName: this.fqen,
-			items,
-			payloadKey: this.payloadKey,
-		})
 	}
 
 	private static mixinTestContract() {

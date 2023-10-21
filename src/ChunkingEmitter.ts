@@ -3,10 +3,11 @@ import { EventName } from '@sprucelabs/mercury-types'
 import { assertOptions } from '@sprucelabs/schema'
 import { buildLog } from '@sprucelabs/spruce-skill-utils'
 
-export default class ChunkingEmitter {
+export default class ChunkingEmitterImpl {
 	private client: MercuryClient
 	private chunkSize: number
 	private log = buildLog('ChunkingEmitter')
+	public static Class: new (options: ChunkingEmitterOptions) => ChunkingEmitter
 
 	private constructor(options: ChunkingEmitterOptions) {
 		const { client, chunkSize } = assertOptions(options, ['client'])
@@ -16,7 +17,7 @@ export default class ChunkingEmitter {
 
 	public static async Emitter(options: ChunkingEmitterOptions) {
 		assertOptions(options, ['client'])
-		return new this(options)
+		return new (this.Class ?? this)(options)
 	}
 
 	public async emit(options: ChunkingEmitterEmitOptions) {
@@ -39,6 +40,10 @@ export default class ChunkingEmitter {
 				this.log.error('Failed to emit chunk', err)
 			}
 		}
+	}
+
+	public static reset() {
+		this.Class = undefined
 	}
 
 	private splitItemsIntoChunks(items: Record<string, unknown>[]) {
@@ -76,4 +81,9 @@ type ChunkingEmitterEmitOptions = {
 	eventName: EventName
 	items: Record<string, unknown>[]
 	payloadKey: string
+}
+
+export interface ChunkingEmitter {
+	emit(options: ChunkingEmitterEmitOptions): Promise<void>
+	getTotalErrors(): number
 }
