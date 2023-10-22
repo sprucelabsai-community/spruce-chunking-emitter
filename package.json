@@ -39,9 +39,11 @@
     "release": "semantic-release"
   },
   "devDependencies": {
+    "@sprucelabs/esm-postbuild": "^5.0.83",
     "@sprucelabs/jest-json-reporter": "^7.0.110",
     "@sprucelabs/resolve-path-aliases": "^1.1.254",
-    "@sprucelabs/spruce-test-fixtures": "^60.0.136",
+    "@sprucelabs/semantic-release": "^4.0.8",
+    "@sprucelabs/spruce-test-fixtures": "^60.0.138",
     "@sprucelabs/test": "^8.0.22",
     "@sprucelabs/test-utils": "^4.0.60",
     "@types/node": "^20.8.7",
@@ -54,9 +56,7 @@
     "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
     "tsc-watch": "^6.0.4",
-    "typescript": "^5.2.2",
-    "@sprucelabs/esm-postbuild": "^5.0.83",
-    "@sprucelabs/semantic-release": "^4.0.8"
+    "typescript": "^5.2.2"
   },
   "description": "Need to emit a ton of data!? Just chunk it!",
   "skill": {

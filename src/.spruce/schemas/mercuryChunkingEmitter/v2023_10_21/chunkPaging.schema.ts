@@ -3,10 +3,10 @@ import { SpruceSchemas } from '../../schemas.types'
 
 
 
-const chunkPagingSchema: SpruceSchemas.ChunkingEmitter.v2023_10_21.ChunkPagingSchema  = {
+const chunkPagingSchema: SpruceSchemas.MercuryChunkingEmitter.v2023_10_21.ChunkPagingSchema  = {
 	id: 'chunkPaging',
 	version: 'v2023_10_21',
-	namespace: 'ChunkingEmitter',
+	namespace: 'MercuryChunkingEmitter',
 	name: 'Chunk Paging',
 	    fields: {
 	            /** . */
