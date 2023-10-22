@@ -1,5 +1,5 @@
 import { FieldDefinitions } from '@sprucelabs/schema'
-import chunkPagingSchema from '#spruce/schemas/chunkingEmitter/v2023_10_21/chunkPaging.schema'
+import chunkPagingSchema from '#spruce/schemas/mercuryChunkingEmitter/v2023_10_21/chunkPaging.schema'
 
 export function chunkFieldDefinition() {
 	return {

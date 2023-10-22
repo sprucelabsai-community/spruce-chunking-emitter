@@ -10,5 +10,8 @@
     "schema",
     "permission",
     "event"
-  ]
+  ],
+  "events": {
+    "lastSync": {}
+  }
 }
