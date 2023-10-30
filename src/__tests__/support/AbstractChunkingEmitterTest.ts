@@ -22,12 +22,9 @@ export default abstract class AbstractChunkingEmitterTest extends AbstractSpruce
 			valueType: 'any',
 		},
 	}
-	protected static uniqueKey?: string
 
 	protected static async beforeEach() {
 		await super.beforeEach()
-
-		delete this.uniqueKey
 
 		this.payloadKey = 'items'
 		this.fqen = 'test.test::v2021_01_01' as EventName
@@ -56,14 +53,16 @@ export default abstract class AbstractChunkingEmitterTest extends AbstractSpruce
 
 	protected static async emitWithItems(
 		items: Record<string, unknown>[],
-		target?: Record<string, any>
+		options?: { target?: Record<string, any>; uniqueKey?: string }
 	) {
+		const { target, uniqueKey } = options ?? {}
+
 		await this.emitter.emit({
 			eventName: this.fqen,
 			items,
 			payloadKey: this.payloadKey,
 			target,
-			unqiueKey: this.uniqueKey,
+			uniqueKey,
 		})
 	}
 

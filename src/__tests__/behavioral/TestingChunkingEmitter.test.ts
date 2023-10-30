@@ -192,6 +192,6 @@ export default class TestingChunkingEmitterTest extends AbstractChunkingEmitterT
 	}
 
 	private static async emit(target?: Record<string, any>) {
-		return this.emitWithItems([this.generateItemValues()], target)
+		return this.emitWithItems([this.generateItemValues()], { target })
 	}
 }

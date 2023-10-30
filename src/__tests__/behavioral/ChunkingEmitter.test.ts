@@ -229,7 +229,7 @@ export default class ChunkingEmitterTest extends AbstractChunkingEmitterTest {
 
 	private static async emitWithOneItem(target?: Record<string, any>) {
 		const items = [this.generateItemValues()]
-		await this.emitWithItems(items, target)
+		await this.emitWithItems(items, { target })
 		return items[0]
 	}
 
