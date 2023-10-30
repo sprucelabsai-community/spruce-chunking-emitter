@@ -1,6 +1,7 @@
+import { BatchCursor } from '@sprucelabs/data-stores'
 import { MercuryClient } from '@sprucelabs/mercury-client'
 import { EventName } from '@sprucelabs/mercury-types'
-import { assertOptions } from '@sprucelabs/schema'
+import { SchemaError, assertOptions } from '@sprucelabs/schema'
 import { buildLog } from '@sprucelabs/spruce-skill-utils'
 
 export default class ChunkingEmitterImpl {
@@ -22,41 +23,83 @@ export default class ChunkingEmitterImpl {
 	}
 
 	public async emit(options: ChunkingEmitterEmitOptions) {
-		const { eventName, items, payloadKey, target } = assertOptions(options, [
-			'eventName',
-			'items',
-			'payloadKey',
-		])
+		const { eventName, items, payloadKey, target, cursor } = assertOptions(
+			options,
+			['eventName', 'payloadKey']
+		)
+
+		if (!items && !cursor) {
+			throw new SchemaError({
+				code: 'MISSING_PARAMETERS',
+				parameters: ['items', 'cursor'],
+				friendlyMessage: `You have to pass either 'items' or a 'cursor' to emit.`,
+			})
+		}
 
 		this.totalErrors = 0
-		const chunks = this.splitItemsIntoChunks(items)
-		let current = 0
 
-		for (const chunk of chunks) {
-			try {
-				let targetAndPayload: Record<string, any> = {
-					payload: {
-						[payloadKey]: chunk,
-						chunk: {
-							current: current++,
-							total: chunks.length,
-						},
-					},
-				}
-
-				if (target) {
-					targetAndPayload.target = target
-				}
-
-				await this.client.emitAndFlattenResponses(
-					eventName as EventName,
-					targetAndPayload
-				)
-			} catch (err: any) {
-				this.log.error('Failed to emit chunk', err)
-				this.totalErrors++
-			}
+		if (!items) {
+			await this.emitChunk({
+				...options,
+				chunk: [{ test: true }],
+				total: 1,
+				current: 0,
+			})
+			return
 		}
+
+		const chunks = this.splitItemsIntoChunks(items)
+		const total = chunks.length
+
+		let current = 0
+		for (const chunk of chunks) {
+			current = await this.emitChunk({
+				payloadKey,
+				chunk,
+				current,
+				total,
+				target,
+				eventName,
+			})
+
+			current++
+		}
+	}
+
+	private async emitChunk(options: {
+		payloadKey: string
+		chunk: Record<string, any>[]
+		current: number
+		total: number
+		target?: Record<string, any> | undefined
+		eventName: EventName
+	}) {
+		const { payloadKey, chunk, current, total, target, eventName } = options
+
+		try {
+			let targetAndPayload: Record<string, any> = {
+				payload: {
+					[payloadKey]: chunk,
+					chunk: {
+						current,
+						total,
+					},
+				},
+			}
+
+			if (target) {
+				targetAndPayload.target = target
+			}
+
+			await this.client.emitAndFlattenResponses(
+				eventName as EventName,
+				targetAndPayload
+			)
+		} catch (err: any) {
+			this.log.error('Failed to emit chunk', err)
+			this.totalErrors++
+		}
+		return current
 	}
 
 	public static reset() {
@@ -96,7 +139,8 @@ interface ChunkingEmitterOptions {
 
 export type ChunkingEmitterEmitOptions = {
 	eventName: EventName
-	items: Record<string, any>[]
+	items?: Record<string, any>[]
+	cursor?: BatchCursor<Record<string, any>>
 	payloadKey: string
 	target?: Record<string, any>
 }

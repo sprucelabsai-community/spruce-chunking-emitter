@@ -57,12 +57,12 @@ export default class TestingChunkingEmitterTest extends AbstractChunkingEmitterT
 
 	@test()
 	protected static async knowsItemsEmitted() {
-		const items = [this.generateItem(), this.generateItem()]
+		const items = [this.generateItemValues(), this.generateItemValues()]
 		this.assertDidEmitItemsThrows(items)
 		await this.emitWithItems(items)
 		this.emitter.assertEmittedItems(items)
 		this.assertDidEmitItemsThrows([])
-		this.assertDidEmitItemsThrows([this.generateItem()])
+		this.assertDidEmitItemsThrows([this.generateItemValues()])
 	}
 
 	@test()
@@ -192,6 +192,6 @@ export default class TestingChunkingEmitterTest extends AbstractChunkingEmitterT
 	}
 
 	private static async emit(target?: Record<string, any>) {
-		return this.emitWithItems([this.generateItem()], target)
+		return this.emitWithItems([this.generateItemValues()], target)
 	}
 }
