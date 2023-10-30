@@ -38,9 +38,10 @@ export default class ChunkingEmitterImpl {
 
 		this.totalErrors = 0
 
-		let actualCursor = cursor ?? this.splitItemsIntoChunks(items ?? [])
-		const total = await actualCursor.getTotalRecords()
 		let current = 0
+		let actualCursor = cursor ?? this.Cursor(items ?? [])
+		const total = await actualCursor.getTotalRecords()
+
 		for await (const chunk of actualCursor) {
 			current = await this.emitChunk({
 				payloadKey,
@@ -95,9 +96,7 @@ export default class ChunkingEmitterImpl {
 		this.Class = undefined
 	}
 
-	private splitItemsIntoChunks(
-		items: Record<string, any>[]
-	): BatchArrayCursor<any> {
+	private Cursor(items: Record<string, any>[]): BatchArrayCursor<any> {
 		const cursor = new BatchArrayCursor(items, { batchSize: this.chunkSize })
 		return cursor
 	}
