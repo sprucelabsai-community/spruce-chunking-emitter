@@ -46,7 +46,7 @@ export default class ChunkingEmitterImpl {
 		)
 
 		if (match) {
-			match.kill()
+			await match.kill()
 		}
 
 		const emitter = new SingleChunkEmitter({
