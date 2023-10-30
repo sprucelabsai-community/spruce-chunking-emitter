@@ -22,9 +22,13 @@ export default abstract class AbstractChunkingEmitterTest extends AbstractSpruce
 			valueType: 'any',
 		},
 	}
+	protected static uniqueKey?: string
 
 	protected static async beforeEach() {
 		await super.beforeEach()
+
+		delete this.uniqueKey
+
 		this.payloadKey = 'items'
 		this.fqen = 'test.test::v2021_01_01' as EventName
 		this.fqen2 = 'test2.test3::v2022_02_02' as EventName
@@ -59,6 +63,7 @@ export default abstract class AbstractChunkingEmitterTest extends AbstractSpruce
 			items,
 			payloadKey: this.payloadKey,
 			target,
+			unqiueKey: this.uniqueKey,
 		})
 	}
 
@@ -85,6 +90,16 @@ export default abstract class AbstractChunkingEmitterTest extends AbstractSpruce
 		})
 
 		return this.buildSignature(payload)
+	}
+
+	protected static async emitWithTotalItems(total: number) {
+		const items = this.generateTotalItemValues(total)
+		await this.emitWithItems(items)
+		return items
+	}
+
+	protected static generateTotalItemValues(total: number) {
+		return new Array(total).fill(0).map(() => this.generateItemValues())
 	}
 
 	protected static async resetEmitter(chunkSize: number = 10) {

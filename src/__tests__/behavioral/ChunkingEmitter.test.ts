@@ -223,12 +223,6 @@ export default class ChunkingEmitterTest extends AbstractChunkingEmitterTest {
 		assert.isEqual(this.hitCount, total)
 	}
 
-	private static async emitWithTotalItems(total: number) {
-		const items = new Array(total).fill(0).map(() => this.generateItemValues())
-		await this.emitWithItems(items)
-		return items
-	}
-
 	private static assertLastEmittedItemsEqual(items: Record<string, any>[]) {
 		assert.isEqualDeep(this.lastEmittedPayload?.items, items)
 	}
