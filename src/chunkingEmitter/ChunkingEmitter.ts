@@ -1,4 +1,4 @@
-import { BatchCursor } from '@sprucelabs/data-stores'
+import { BatchArrayCursor, BatchCursor } from '@sprucelabs/data-stores'
 import { MercuryClient } from '@sprucelabs/mercury-client'
 import { EventName } from '@sprucelabs/mercury-types'
 import { SchemaError, assertOptions } from '@sprucelabs/schema'
@@ -38,21 +38,10 @@ export default class ChunkingEmitterImpl {
 
 		this.totalErrors = 0
 
-		if (!items) {
-			await this.emitChunk({
-				...options,
-				chunk: [{ test: true }],
-				total: 1,
-				current: 0,
-			})
-			return
-		}
-
-		const chunks = this.splitItemsIntoChunks(items)
-		const total = chunks.length
-
+		let actualCursor = cursor ?? this.splitItemsIntoChunks(items ?? [])
+		const total = await actualCursor.getTotalRecords()
 		let current = 0
-		for (const chunk of chunks) {
+		for await (const chunk of actualCursor) {
 			current = await this.emitChunk({
 				payloadKey,
 				chunk,
@@ -106,25 +95,11 @@ export default class ChunkingEmitterImpl {
 		this.Class = undefined
 	}
 
-	private splitItemsIntoChunks(items: Record<string, any>[]) {
-		const chunks: Record<string, any>[][] = []
-
-		let index = 0
-
-		for (const item of items) {
-			if (!chunks[index]) {
-				chunks[index] = []
-			}
-
-			if (chunks[index].length === this.chunkSize) {
-				index++
-				chunks[index] = []
-			}
-
-			chunks[index].push(item)
-		}
-
-		return chunks
+	private splitItemsIntoChunks(
+		items: Record<string, any>[]
+	): BatchArrayCursor<any> {
+		const cursor = new BatchArrayCursor(items, { batchSize: this.chunkSize })
+		return cursor
 	}
 
 	public getTotalErrors(): number {

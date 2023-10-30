@@ -7,12 +7,19 @@ import SimpleStore from '../support/SimpleStore'
 export default class ChunkingWithDataStoreCursorTest extends AbstractChunkingEmitterTest {
 	private static simple: SimpleStore
 	private static hitCount = 0
+	private static passedPayload?: {
+		items: Record<string, any>[]
+	}
+	private static batchSize = 10
 
 	protected static async beforeEach() {
 		await super.beforeEach()
 		this.mixinTestContract()
 
 		this.hitCount = 0
+		this.batchSize = 10
+
+		delete this.passedPayload
 
 		const stores = await this.stores.getStoreFactory()
 		stores.setStoreClass('simple', SimpleStore)
@@ -21,7 +28,9 @@ export default class ChunkingWithDataStoreCursorTest extends AbstractChunkingEmi
 
 		await this.resetEmitter()
 
+		//@ts-ignore
 		await this.fakedClient.on(this.fqen, ({ payload }) => {
+			this.passedPayload = payload
 			this.hitCount++
 		})
 	}
@@ -33,18 +42,61 @@ export default class ChunkingWithDataStoreCursorTest extends AbstractChunkingEmi
 
 	@test()
 	protected static async firstEmitIncludesFirstBatch() {
-		const created = {
+		const expected = await this.seedItemsFindAndEmit(1)
+
+		this.assertTotalEmits(1)
+		this.assertLastEmittedItems(expected)
+	}
+
+	@test()
+	protected static async firstEmitIncludesFirstBatchEvenIfManyItems() {
+		const expected = await this.seedItemsFindAndEmit(2)
+		this.assertTotalEmits(1)
+		this.assertLastEmittedItems(expected)
+	}
+
+	@test()
+	protected static async emitsForEachBatch() {
+		this.batchSize = 1
+		await this.seedItemsFindAndEmit(2)
+		this.assertTotalEmits(2)
+	}
+
+	private static async seedItemsFindAndEmit(total: number) {
+		const expected = await this.seedItems(total)
+		await this.findAndEmit()
+		return expected
+	}
+
+	private static assertLastEmittedItems(expected: Record<string, any>[]) {
+		assert.isEqualDeep(this.passedPayload?.items, expected)
+	}
+
+	private static assertTotalEmits(expected: number) {
+		assert.isEqual(this.hitCount, expected)
+	}
+
+	private static async seedItems(total: number) {
+		const values = new Array(total)
+			.fill(0)
+			.map(() => this.generateSensorValues())
+		const items = await this.simple.create(values)
+		return items
+	}
+
+	private static generateSensorValues() {
+		return {
 			sensorName: generateId(),
 		}
-
-		await this.simple.createOne(created)
-		await this.findAndEmit()
-
-		assert.isEqual(this.hitCount, 1)
 	}
 
 	private static async findBatch() {
-		return await this.simple.findBatch({})
+		return await this.simple.findBatch(
+			{},
+			{
+				batchSize: this.batchSize,
+			}
+		)
 	}
 
 	private static async findAndEmit() {
