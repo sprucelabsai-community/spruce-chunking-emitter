@@ -1,3 +1,10 @@
+# [2.0.0](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v1.5.3...v2.0.0) (2023-10-31)
+
+
+### Breaking Changes
+
+* cursor -> batchCursor for accuracy ([5bac3ca](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/5bac3ca))
+
 ## [1.5.3](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v1.5.2...v1.5.3) (2023-10-31)
 
 ## [1.5.2](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v1.5.1...v1.5.2) (2023-10-31)
