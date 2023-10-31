@@ -1,3 +1,4 @@
+import { BatchArrayCursor } from '@sprucelabs/data-stores'
 import { EventName } from '@sprucelabs/mercury-types'
 import {
 	FieldDefinitions,
@@ -7,7 +8,9 @@ import {
 import { fake } from '@sprucelabs/spruce-test-fixtures'
 import { test, assert, generateId } from '@sprucelabs/test-utils'
 import { chunkFieldDefinition } from '../../chunkingEmitter/chunkFieldDefinition'
-import ChunkingEmitterImpl from '../../chunkingEmitter/ChunkingEmitter'
+import ChunkingEmitterImpl, {
+	ChunkingEmitterEmitOptions,
+} from '../../chunkingEmitter/ChunkingEmitter'
 import MockChunkingEmitter from '../../chunkingEmitter/MockChunkingEmitter'
 import AbstractChunkingEmitterTest from '../support/AbstractChunkingEmitterTest'
 
@@ -148,6 +151,14 @@ export default class TestingChunkingEmitterTest extends AbstractChunkingEmitterT
 		})
 	}
 
+	@test()
+	protected static async canAssertWasSentCursor() {
+		assert.doesThrow(() => this.emitter.assertDidReceiveCursor())
+		const cursor = new BatchArrayCursor([])
+		await this.emit({}, { batchCursor: cursor })
+		this.emitter.assertDidReceiveCursor()
+	}
+
 	private static assertDidNotEmitWithTarget(target: Record<string, any>) {
 		assert.doesThrow(() => this.emitter.assertDidEmitTarget(target))
 	}
@@ -191,7 +202,13 @@ export default class TestingChunkingEmitterTest extends AbstractChunkingEmitterT
 		assert.doesThrow(() => this.emitter.assertEmittedItems(items))
 	}
 
-	private static async emit(target?: Record<string, any>) {
-		return this.emitWithItems([this.generateItemValues()], { target })
+	private static async emit(
+		target?: Record<string, any>,
+		options?: Partial<ChunkingEmitterEmitOptions>
+	) {
+		return this.emitWithItems([this.generateItemValues()], {
+			target,
+			...options,
+		})
 	}
 }

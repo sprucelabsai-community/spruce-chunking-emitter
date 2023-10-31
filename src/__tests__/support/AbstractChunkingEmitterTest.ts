@@ -7,6 +7,7 @@ import { generateId } from '@sprucelabs/test-utils'
 import { chunkFieldDefinition } from '../../chunkingEmitter/chunkFieldDefinition'
 import ChunkingEmitterImpl, {
 	ChunkingEmitter,
+	ChunkingEmitterEmitOptions,
 } from '../../chunkingEmitter/ChunkingEmitter'
 import SpyEmitter from '../behavioral/SpyEmitter'
 
@@ -53,16 +54,13 @@ export default abstract class AbstractChunkingEmitterTest extends AbstractSpruce
 
 	protected static async emitWithItems(
 		items: Record<string, unknown>[],
-		options?: { target?: Record<string, any>; uniqueKey?: string }
+		options?: Partial<ChunkingEmitterEmitOptions>
 	) {
-		const { target, uniqueKey } = options ?? {}
-
 		await this.emitter.emit({
 			eventName: this.fqen,
 			items,
 			payloadKey: this.payloadKey,
-			target,
-			uniqueKey,
+			...options,
 		})
 	}
 

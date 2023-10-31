@@ -27,7 +27,7 @@ export default class ChunkingEmitterImpl {
 	public async emit(options: ChunkingEmitterEmitOptions) {
 		const {
 			items,
-			cursor,
+			batchCursor: cursor,
 			uniqueKey: unqiueKey,
 		} = assertOptions(options, ['eventName', 'payloadKey'])
 
@@ -36,8 +36,8 @@ export default class ChunkingEmitterImpl {
 		if (!items && !cursor) {
 			throw new SchemaError({
 				code: 'MISSING_PARAMETERS',
-				parameters: ['items', 'cursor'],
-				friendlyMessage: `You have to pass either 'items' or a 'cursor' to emit.`,
+				parameters: ['items', 'batchCursor'],
+				friendlyMessage: `You have to pass either 'items' or a 'batchCursor' to emit.`,
 			})
 		}
 
@@ -83,10 +83,10 @@ interface ChunkingEmitterOptions {
 export type ChunkingEmitterEmitOptions = {
 	eventName: EventName
 	items?: Record<string, any>[]
-	cursor?: BatchCursor<Record<string, any>>
+	batchCursor?: BatchCursor<Record<string, any>>
 	payloadKey: string
 	target?: Record<string, any>
-	/** will stop any running operations that match the key */
+	/** will kill any running operations that match the key */
 	uniqueKey?: string
 }
 

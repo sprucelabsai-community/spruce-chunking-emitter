@@ -73,7 +73,11 @@ export default class ChunkingWithDataStoreCursorTest extends AbstractChunkingEmi
 	}
 
 	private static assertTotalEmits(expected: number) {
-		assert.isEqual(this.hitCount, expected)
+		assert.isEqual(
+			this.hitCount,
+			expected,
+			`Expected ${expected} emits but got ${this.hitCount}`
+		)
 	}
 
 	private static async seedItems(total: number) {
@@ -103,7 +107,7 @@ export default class ChunkingWithDataStoreCursorTest extends AbstractChunkingEmi
 		const cursor = await this.findBatch()
 		await this.emitter.emit({
 			eventName: this.fqen,
-			cursor,
+			batchCursor: cursor,
 			payloadKey: 'items',
 		})
 	}

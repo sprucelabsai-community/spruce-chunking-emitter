@@ -60,7 +60,7 @@ export default class ChunkingEmitterTest extends AbstractChunkingEmitterTest {
 			})
 		)
 		errorAssert.assertError(err, 'MISSING_PARAMETERS', {
-			parameters: ['items', 'cursor'],
+			parameters: ['items', 'batchCursor'],
 		})
 	}
 

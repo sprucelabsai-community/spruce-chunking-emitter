@@ -19,7 +19,7 @@ export default class SingleChunkEmitter {
 
 	public constructor(options: SingleChunkEmitterOptions) {
 		const {
-			cursor,
+			batchCursor: cursor,
 			items,
 			payloadKey,
 			target,
@@ -107,7 +107,7 @@ export default class SingleChunkEmitter {
 }
 
 interface SingleChunkEmitterOptions {
-	cursor?: BatchCursor<Record<string, any>>
+	batchCursor?: BatchCursor<Record<string, any>>
 	items?: Record<string, any>[]
 	payloadKey: string
 	target?: Record<string, any>

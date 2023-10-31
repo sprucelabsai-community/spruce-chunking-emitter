@@ -1,3 +1,4 @@
+import { BatchCursor } from '@sprucelabs/data-stores'
 import { MercuryTestClient } from '@sprucelabs/mercury-client'
 import { EventName } from '@sprucelabs/mercury-types'
 import { assert } from '@sprucelabs/test-utils'
@@ -11,6 +12,7 @@ export default class MockChunkingEmitter implements ChunkingEmitter {
 	private emittedPayloadKey?: string
 	public static lastInstance?: MockChunkingEmitter
 	private emittedTarget?: Record<string, any>
+	private emittedCursor?: BatchCursor<Record<string, any>>
 
 	public constructor() {
 		MockChunkingEmitter.lastInstance = this
@@ -29,12 +31,19 @@ export default class MockChunkingEmitter implements ChunkingEmitter {
 	}
 
 	public async emit(options: ChunkingEmitterEmitOptions): Promise<void> {
-		const { eventName, items, payloadKey, target } = options
+		const {
+			eventName,
+			items,
+			payloadKey,
+			target,
+			batchCursor: cursor,
+		} = options
 		this.didEmit = true
 		this.emittedEventName = eventName
 		this.emittedItems = items
 		this.emittedPayloadKey = payloadKey
 		this.emittedTarget = target
+		this.emittedCursor = cursor
 	}
 
 	public assertDidEmitTarget(target: Record<string, any>) {
@@ -53,6 +62,13 @@ export default class MockChunkingEmitter implements ChunkingEmitter {
 			`I expected chunkingEmitter.emit() with payloadKey '${payloadKey}'! But you emitted ${
 				this.emittedPayloadKey || 'nothing'
 			}`
+		)
+	}
+
+	public assertDidReceiveCursor() {
+		assert.isTruthy(
+			this.emittedCursor,
+			'You did not chunkingEmitter.emit(...) the expected batch cursor!'
 		)
 	}
 
