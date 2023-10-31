@@ -65,6 +65,21 @@ export default class ChunkingEmitterTest extends AbstractChunkingEmitterTest {
 	}
 
 	@test()
+	protected static async throwsIfPassedBothEventsAndCursor() {
+		const err = await assert.doesThrowAsync(() =>
+			this.emitter.emit({
+				eventName: this.fqen,
+				payloadKey: 'items',
+				items: [],
+				batchCursor: {} as any,
+			})
+		)
+		errorAssert.assertError(err, 'INVALID_PARAMETERS', {
+			parameters: ['items', 'batchCursor'],
+		})
+	}
+
+	@test()
 	protected static async emitsNothingIfPassedNoItems() {
 		await this.emitWithItems([])
 		assert.isFalse(this.wasEventEmitted)

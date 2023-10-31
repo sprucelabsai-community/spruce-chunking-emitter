@@ -39,6 +39,12 @@ export default class ChunkingEmitterImpl {
 				parameters: ['items', 'batchCursor'],
 				friendlyMessage: `You have to pass either 'items' or a 'batchCursor' to emit.`,
 			})
+		} else if (items && cursor) {
+			throw new SchemaError({
+				code: 'INVALID_PARAMETERS',
+				parameters: ['items', 'batchCursor'],
+				friendlyMessage: `You can only pass either 'items' or a 'batchCursor' to emit, not both.`,
+			})
 		}
 
 		const match = this.emitters.find(
