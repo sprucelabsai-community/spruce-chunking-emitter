@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v2.0.3...v2.1.0) (2023-11-01)
+
+
+### Features
+
+* can pass custom payload to emitter ([0314bf6](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/0314bf6))
+
 ## [2.0.3](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v2.0.2...v2.0.3) (2023-10-31)
 
 ## [2.0.2](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v2.0.1...v2.0.2) (2023-10-31)
