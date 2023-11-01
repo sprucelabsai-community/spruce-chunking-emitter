@@ -4,7 +4,7 @@ import { FieldDefinitions, Schema, buildSchema } from '@sprucelabs/schema'
 import { buildEmitTargetAndPayloadSchema } from '@sprucelabs/spruce-event-utils'
 import { AbstractSpruceFixtureTest } from '@sprucelabs/spruce-test-fixtures'
 import { generateId } from '@sprucelabs/test-utils'
-import { chunkFieldDefinition } from '../../chunkingEmitter/chunkFieldDefinition'
+import chunkFieldDefinition from '../../chunkingEmitter/chunkFieldDefinition'
 import ChunkingEmitterImpl, {
 	ChunkingEmitter,
 	ChunkingEmitterEmitOptions,

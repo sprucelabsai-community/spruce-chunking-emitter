@@ -7,7 +7,7 @@ import {
 } from '@sprucelabs/schema'
 import { fake } from '@sprucelabs/spruce-test-fixtures'
 import { test, assert, generateId } from '@sprucelabs/test-utils'
-import { chunkFieldDefinition } from '../../chunkingEmitter/chunkFieldDefinition'
+import chunkFieldDefinition from '../../chunkingEmitter/chunkFieldDefinition'
 import ChunkingEmitterImpl, {
 	ChunkingEmitterEmitOptions,
 } from '../../chunkingEmitter/ChunkingEmitter'

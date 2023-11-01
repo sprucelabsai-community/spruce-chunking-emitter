@@ -3,3 +3,5 @@ export default ChunkingEmitterImpl
 
 export { ChunkingEmitter } from './chunkingEmitter/ChunkingEmitter'
 export { default as MockChunkingEmitter } from './chunkingEmitter/MockChunkingEmitter'
+
+export { default as chunkFieldDefinition } from './chunkingEmitter/chunkFieldDefinition'

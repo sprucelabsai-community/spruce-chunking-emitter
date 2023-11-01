@@ -2,7 +2,7 @@ import { BatchCursor } from '@sprucelabs/data-stores'
 import { MercuryTestClient } from '@sprucelabs/mercury-client'
 import { EventName } from '@sprucelabs/mercury-types'
 import { assert } from '@sprucelabs/test-utils'
-import { chunkFieldDefinition } from './chunkFieldDefinition'
+import chunkFieldDefinition from './chunkFieldDefinition'
 import { ChunkingEmitter, ChunkingEmitterEmitOptions } from './ChunkingEmitter'
 
 export default class MockChunkingEmitter implements ChunkingEmitter {
