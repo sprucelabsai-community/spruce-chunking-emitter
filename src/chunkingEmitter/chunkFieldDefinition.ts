@@ -1,12 +1,28 @@
 import { SchemaFieldFieldDefinition } from '@sprucelabs/schema'
-import chunkPagingSchema from '#spruce/schemas/mercuryChunkingEmitter/v2023_10_21/chunkPaging.schema'
 
 export default function chunkFieldDefinition() {
 	return {
 		type: 'schema',
 		isRequired: true,
 		options: {
-			schema: chunkPagingSchema,
+			schema: {
+				id: 'chunkPaging',
+				version: 'v2023_10_21',
+				namespace: 'MercuryChunkingEmitter',
+				name: 'Chunk Paging',
+				fields: {
+					total: {
+						type: 'number',
+						isRequired: true,
+						options: undefined,
+					},
+					current: {
+						type: 'number',
+						isRequired: true,
+						options: undefined,
+					},
+				},
+			},
 		},
 	} as SchemaFieldFieldDefinition
 }
