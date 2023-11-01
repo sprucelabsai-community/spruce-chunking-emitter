@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v2.1.0...v2.2.0) (2023-11-01)
+
+
+### Features
+
+* can assert emit payload ([49f9c04](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/49f9c04))
+
 # [2.1.0](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v2.0.3...v2.1.0) (2023-11-01)
 
 
