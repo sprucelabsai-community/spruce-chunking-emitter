@@ -16,6 +16,7 @@ export default class SingleChunkEmitter {
 	private log: Log
 	public totalErrors: number = 0
 	private isKilled: boolean = false
+	private payload?: Record<string, any>
 
 	public constructor(options: SingleChunkEmitterOptions) {
 		const {
@@ -28,6 +29,7 @@ export default class SingleChunkEmitter {
 			client,
 			uniqueKey,
 			log,
+			payload,
 		} = options
 
 		this.cursor = cursor
@@ -38,6 +40,7 @@ export default class SingleChunkEmitter {
 		this.eventName = eventName
 		this.chunkSize = chunkSize
 		this.client = client
+		this.payload = payload
 		this.log = log.buildLog('Emitter')
 	}
 
@@ -84,6 +87,7 @@ export default class SingleChunkEmitter {
 		let targetAndPayload: Record<string, any> = {
 			payload: {
 				[this.payloadKey]: chunk,
+				...this.payload,
 				chunk: {
 					current,
 					total: this.total,
@@ -110,6 +114,7 @@ interface SingleChunkEmitterOptions {
 	batchCursor?: BatchCursor<Record<string, any>>
 	items?: Record<string, any>[]
 	payloadKey: string
+	payload?: Record<string, any>
 	target?: Record<string, any>
 	eventName: EventName
 	chunkSize: number

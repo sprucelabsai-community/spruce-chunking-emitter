@@ -91,6 +91,7 @@ export type ChunkingEmitterEmitOptions = {
 	items?: Record<string, any>[]
 	batchCursor?: BatchCursor<Record<string, any>>
 	payloadKey: string
+	payload?: Record<string, any>
 	target?: Record<string, any>
 	/** will kill any running operations that match the key */
 	uniqueKey?: string

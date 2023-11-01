@@ -16,6 +16,7 @@ export default abstract class AbstractChunkingEmitterTest extends AbstractSpruce
 	protected static fqen: EventName
 	protected static fqen2: EventName
 	protected static payloadKey: string
+	protected static customPayload?: Record<string, any>
 	protected static readonly itemFieldDefinition: FieldDefinitions = {
 		type: 'raw',
 		isArray: true,
@@ -27,6 +28,7 @@ export default abstract class AbstractChunkingEmitterTest extends AbstractSpruce
 	protected static async beforeEach() {
 		await super.beforeEach()
 
+		delete this.customPayload
 		this.payloadKey = 'items'
 		this.fqen = 'test.test::v2021_01_01' as EventName
 		this.fqen2 = 'test2.test3::v2022_02_02' as EventName
@@ -60,6 +62,7 @@ export default abstract class AbstractChunkingEmitterTest extends AbstractSpruce
 			eventName: this.fqen,
 			items,
 			payloadKey: this.payloadKey,
+			payload: this.customPayload,
 			...options,
 		})
 	}
@@ -83,6 +86,12 @@ export default abstract class AbstractChunkingEmitterTest extends AbstractSpruce
 				items: this.itemFieldDefinition,
 				items2: this.itemFieldDefinition,
 				chunk: chunkFieldDefinition(),
+				id: {
+					type: 'id',
+				},
+				taco: {
+					type: 'text',
+				},
 			},
 		})
 

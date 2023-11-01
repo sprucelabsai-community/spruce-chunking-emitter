@@ -224,6 +224,17 @@ export default class ChunkingEmitterTest extends AbstractChunkingEmitterTest {
 		assert.isEqualDeep(this.emitter.getChunkSize(), 10)
 	}
 
+	@test('can pass custom payload 1', { id: generateId() })
+	@test('can pass custom payload 2', { taco: 'bravo' })
+	protected static async canPassCustomPayloadKeysAndValues(
+		payload: Record<string, any>
+	) {
+		this.customPayload = payload
+
+		await this.emitWithOneItem()
+		assert.isEqual(this.lastEmittedPayload.id, this.customPayload.id)
+	}
+
 	private static async makeEventThrow() {
 		await eventFaker.on(this.fqen, () => {
 			throw new Error('Failed')
@@ -258,7 +269,9 @@ export default class ChunkingEmitterTest extends AbstractChunkingEmitterTest {
 	}
 
 	private static get lastTargetAndPayload() {
-		return this.allTargetAndPayloads[this.allTargetAndPayloads.length - 1]
+		const last = this.allTargetAndPayloads[this.allTargetAndPayloads.length - 1]
+		assert.isTruthy(last, 'Emit never happened')
+		return last
 	}
 
 	private static get wasEventEmitted() {
