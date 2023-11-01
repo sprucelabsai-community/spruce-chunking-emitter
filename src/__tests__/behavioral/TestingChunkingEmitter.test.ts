@@ -159,6 +159,20 @@ export default class TestingChunkingEmitterTest extends AbstractChunkingEmitterT
 		this.emitter.assertDidReceiveCursor()
 	}
 
+	@test()
+	protected static async canAssertLastPayload() {
+		const payload = {
+			id: generateId(),
+		}
+		assert.doesThrow(() => this.emitter.assertEmittedPayloadIncludes({}))
+
+		await this.emit(undefined, { payload })
+
+		this.emitter.assertEmittedPayloadIncludes(payload)
+
+		assert.doesThrow(() => this.emitter.assertEmittedPayloadIncludes({}))
+	}
+
 	private static assertDidNotEmitWithTarget(target: Record<string, any>) {
 		assert.doesThrow(() => this.emitter.assertDidEmitTarget(target))
 	}

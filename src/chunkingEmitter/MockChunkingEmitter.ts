@@ -13,6 +13,7 @@ export default class MockChunkingEmitter implements ChunkingEmitter {
 	public static lastInstance?: MockChunkingEmitter
 	private emittedTarget?: Record<string, any>
 	private emittedCursor?: BatchCursor<Record<string, any>>
+	private emittedPayload?: Record<string, any>
 
 	public constructor() {
 		MockChunkingEmitter.lastInstance = this
@@ -37,6 +38,7 @@ export default class MockChunkingEmitter implements ChunkingEmitter {
 			payloadKey,
 			target,
 			batchCursor: cursor,
+			payload,
 		} = options
 		this.didEmit = true
 		this.emittedEventName = eventName
@@ -44,6 +46,7 @@ export default class MockChunkingEmitter implements ChunkingEmitter {
 		this.emittedPayloadKey = payloadKey
 		this.emittedTarget = target
 		this.emittedCursor = cursor
+		this.emittedPayload = payload
 	}
 
 	public assertDidEmitTarget(target: Record<string, any>) {
@@ -63,6 +66,11 @@ export default class MockChunkingEmitter implements ChunkingEmitter {
 				this.emittedPayloadKey || 'nothing'
 			}`
 		)
+	}
+
+	public assertEmittedPayloadIncludes(payload: Record<string, any>) {
+		this.assertDidEmit()
+		assert.doesInclude(this.emittedPayload, payload)
 	}
 
 	public assertDidReceiveCursor() {
