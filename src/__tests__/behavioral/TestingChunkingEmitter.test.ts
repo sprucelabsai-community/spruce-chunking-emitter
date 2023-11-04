@@ -155,7 +155,7 @@ export default class TestingChunkingEmitterTest extends AbstractChunkingEmitterT
 	protected static async canAssertWasSentCursor() {
 		assert.doesThrow(() => this.emitter.assertDidReceiveCursor())
 		const cursor = new BatchArrayCursor([])
-		await this.emit({}, { batchCursor: cursor })
+		await this.emit({}, { batchCursor: cursor, items: undefined })
 		this.emitter.assertDidReceiveCursor()
 	}
 
@@ -171,6 +171,16 @@ export default class TestingChunkingEmitterTest extends AbstractChunkingEmitterT
 		this.emitter.assertEmittedPayloadIncludes(payload)
 
 		assert.doesThrow(() => this.emitter.assertEmittedPayloadIncludes({}))
+	}
+
+	@test()
+	protected static async cannotPassBothItemsAndCursor() {
+		await assert.doesThrowAsync(() =>
+			this.emit(undefined, {
+				items: [],
+				batchCursor: new BatchArrayCursor([]),
+			})
+		)
 	}
 
 	private static assertDidNotEmitWithTarget(target: Record<string, any>) {

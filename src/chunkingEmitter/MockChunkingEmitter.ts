@@ -47,6 +47,12 @@ export default class MockChunkingEmitter implements ChunkingEmitter {
 		this.emittedTarget = target
 		this.emittedCursor = cursor
 		this.emittedPayload = payload
+
+		if (items && cursor) {
+			assert.fail(
+				`You can only pass either 'items' or a 'batchCursor' to emit, not both.`
+			)
+		}
 	}
 
 	public assertDidEmitTarget(target: Record<string, any>) {
