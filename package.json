@@ -90,8 +90,8 @@
     "@sprucelabs/mercury-client": "^41.0.132",
     "@sprucelabs/mercury-types": "^46.0.115",
     "@sprucelabs/schema": "^29.0.83",
-    "@sprucelabs/spruce-core-schemas": "^39.0.122",
-    "@sprucelabs/spruce-event-utils": "^38.0.137",
+    "@sprucelabs/spruce-core-schemas": "^39.0.123",
+    "@sprucelabs/spruce-event-utils": "^38.0.138",
     "@sprucelabs/spruce-skill-utils": "^30.1.19"
   }
 }
