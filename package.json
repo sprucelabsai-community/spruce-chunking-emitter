@@ -46,7 +46,7 @@
     "@sprucelabs/spruce-test-fixtures": "^60.1.264",
     "@sprucelabs/test": "^8.0.41",
     "@sprucelabs/test-utils": "^4.0.106",
-    "@types/node": "^20.11.22",
+    "@types/node": "^20.11.23",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
