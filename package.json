@@ -39,13 +39,13 @@
     "release": "semantic-release"
   },
   "devDependencies": {
-    "@sprucelabs/esm-postbuild": "^5.0.180",
-    "@sprucelabs/jest-json-reporter": "^7.0.190",
+    "@sprucelabs/esm-postbuild": "^5.0.181",
+    "@sprucelabs/jest-json-reporter": "^7.0.191",
     "@sprucelabs/resolve-path-aliases": "^1.1.293",
     "@sprucelabs/semantic-release": "^4.0.8",
-    "@sprucelabs/spruce-test-fixtures": "^61.1.6",
+    "@sprucelabs/spruce-test-fixtures": "^61.1.7",
     "@sprucelabs/test": "^8.0.46",
-    "@sprucelabs/test-utils": "^4.0.132",
+    "@sprucelabs/test-utils": "^4.0.133",
     "@types/node": "^20.11.30",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^8.2.2",
@@ -55,7 +55,7 @@
     "jest-circus": "^29.7.0",
     "prettier": "^3.2.5",
     "ts-node": "^10.9.2",
-    "tsc-watch": "^6.0.5",
+    "tsc-watch": "^6.1.0",
     "typescript": "^5.4.3"
   },
   "description": "Need to emit a ton of data!? Just chunk it!",
@@ -86,12 +86,12 @@
     }
   },
   "dependencies": {
-    "@sprucelabs/data-stores": "^26.4.63",
-    "@sprucelabs/mercury-client": "^41.0.356",
-    "@sprucelabs/mercury-types": "^46.0.274",
-    "@sprucelabs/schema": "^29.4.34",
-    "@sprucelabs/spruce-core-schemas": "^39.0.268",
-    "@sprucelabs/spruce-event-utils": "^38.1.14",
-    "@sprucelabs/spruce-skill-utils": "^30.3.30"
+    "@sprucelabs/data-stores": "^26.4.64",
+    "@sprucelabs/mercury-client": "^41.0.357",
+    "@sprucelabs/mercury-types": "^46.0.275",
+    "@sprucelabs/schema": "^29.4.35",
+    "@sprucelabs/spruce-core-schemas": "^39.0.269",
+    "@sprucelabs/spruce-event-utils": "^38.1.15",
+    "@sprucelabs/spruce-skill-utils": "^30.3.31"
   }
 }
