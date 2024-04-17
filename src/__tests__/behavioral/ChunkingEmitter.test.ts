@@ -34,8 +34,8 @@ export default class ChunkingEmitterTest extends AbstractChunkingEmitterTest {
 
     @test()
     protected static async throwsWithMissing() {
-        //@ts-ignore
         const err = await assert.doesThrowAsync(() =>
+            //@ts-ignore
             ChunkingEmitterImpl.Emitter()
         )
         errorAssert.assertError(err, 'MISSING_PARAMETERS', {
