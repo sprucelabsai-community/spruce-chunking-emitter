@@ -1,5 +1,7 @@
-import { PermissionContract } from '@sprucelabs/mercury-types'
+import { PermissionContract } from "@sprucelabs/mercury-types"
 
-const contracts: PermissionContract[] = []
+const contracts: PermissionContract[] = [
+]
+
 
 export default contracts
