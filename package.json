@@ -45,7 +45,7 @@
     "@sprucelabs/spruce-test-fixtures": "^62.2.19",
     "@sprucelabs/test": "^9.0.30",
     "@sprucelabs/test-utils": "^5.1.2",
-    "@types/node": "^20.14.6",
+    "@types/node": "^20.14.7",
     "chokidar-cli": "^3.0.0",
     "eslint": "^9.5.0",
     "eslint-config-spruce": "^11.2.24",
