@@ -1,3 +1,5 @@
+## [3.0.278](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v3.0.277...v3.0.278) (2024-07-21)
+
 ## [3.0.277](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v3.0.276...v3.0.277) (2024-07-21)
 
 ## [3.0.276](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v3.0.275...v3.0.276) (2024-07-20)
