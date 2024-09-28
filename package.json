@@ -1,6 +1,6 @@
 {
   "name": "@sprucelabs/mercury-chunking-emitter",
-  "version": "3.0.519",
+  "version": "3.0.520",
   "files": [
     "build/**/*",
     "!build/__tests__",
