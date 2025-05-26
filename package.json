@@ -42,7 +42,7 @@
     "@sprucelabs/jest-json-reporter": "^8.0.605",
     "@sprucelabs/resolve-path-aliases": "^2.0.543",
     "@sprucelabs/semantic-release": "^5.0.2",
-    "@sprucelabs/spruce-test-fixtures": "^66.1.16",
+    "@sprucelabs/spruce-test-fixtures": "^66.1.17",
     "@sprucelabs/test": "^9.0.82",
     "@sprucelabs/test-utils": "^5.5.53",
     "@types/node": "^22.15.21",
@@ -85,11 +85,11 @@
   },
   "dependencies": {
     "@sprucelabs/data-stores": "^28.6.8",
-    "@sprucelabs/mercury-client": "^42.0.801",
+    "@sprucelabs/mercury-client": "^42.0.802",
     "@sprucelabs/mercury-types": "^47.2.89",
     "@sprucelabs/schema": "^31.1.6",
     "@sprucelabs/spruce-core-schemas": "^40.1.694",
-    "@sprucelabs/spruce-event-utils": "^40.2.98",
+    "@sprucelabs/spruce-event-utils": "^40.2.99",
     "@sprucelabs/spruce-skill-utils": "^31.2.107"
   }
 }
