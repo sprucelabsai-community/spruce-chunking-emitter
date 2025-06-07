@@ -1,3 +1,10 @@
+# [4.0.0](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v3.0.934...v4.0.0) (2025-06-07)
+
+
+### Breaking Changes
+
+* upgrade ([0f7b45a](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/0f7b45a))
+
 ## [3.0.934](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v3.0.933...v3.0.934) (2025-06-06)
 
 ## [3.0.933](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v3.0.932...v3.0.933) (2025-06-06)
