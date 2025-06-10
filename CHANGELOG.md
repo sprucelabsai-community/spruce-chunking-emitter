@@ -1,3 +1,10 @@
+# [5.0.0](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v4.0.1...v5.0.0) (2025-06-10)
+
+
+### Breaking Changes
+
+* jest update ([e9c0140](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/e9c0140))
+
 ## [4.0.1](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v4.0.0...v4.0.1) (2025-06-09)
 
 # [4.0.0](https://github.com/sprucelabsai-community/spruce-chunking-emitter/compare/v3.0.934...v4.0.0) (2025-06-07)
