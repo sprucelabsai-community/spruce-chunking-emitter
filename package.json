@@ -42,7 +42,7 @@
     "@sprucelabs/jest-json-reporter": "^9.0.22",
     "@sprucelabs/resolve-path-aliases": "^3.0.12",
     "@sprucelabs/semantic-release": "^5.0.2",
-    "@sprucelabs/spruce-test-fixtures": "^69.0.0",
+    "@sprucelabs/spruce-test-fixtures": "^69.0.1",
     "@sprucelabs/test": "^10.0.10",
     "@sprucelabs/test-utils": "^6.0.31",
     "@types/node": "^24.0.10",
