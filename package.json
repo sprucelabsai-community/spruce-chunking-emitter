@@ -84,7 +84,7 @@
     }
   },
   "dependencies": {
-    "@sprucelabs/data-stores": "^30.0.28",
+    "@sprucelabs/data-stores": "^30.0.29",
     "@sprucelabs/mercury-client": "^43.0.89",
     "@sprucelabs/mercury-types": "^48.0.65",
     "@sprucelabs/schema": "^32.1.15",
