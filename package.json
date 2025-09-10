@@ -84,12 +84,12 @@
     }
   },
   "dependencies": {
-    "@sprucelabs/data-stores": "^30.0.54",
+    "@sprucelabs/data-stores": "^30.0.55",
     "@sprucelabs/mercury-client": "^43.0.119",
     "@sprucelabs/mercury-types": "^48.0.87",
     "@sprucelabs/schema": "^32.1.38",
     "@sprucelabs/spruce-core-schemas": "^41.1.2",
-    "@sprucelabs/spruce-event-utils": "^41.0.97",
-    "@sprucelabs/spruce-skill-utils": "^32.0.92"
+    "@sprucelabs/spruce-event-utils": "^41.0.98",
+    "@sprucelabs/spruce-skill-utils": "^32.0.93"
   }
 }
