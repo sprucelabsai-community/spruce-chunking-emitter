@@ -1,3 +1,8 @@
+## <small>8.0.136 (2025-11-12)</small>
+
+* chore(auto-upgrade): Upgrade Tests Passed [auto-merge] ([d3c867e](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/d3c867e))
+* chore(auto-upgrade): upgraded packages [upgrade-all] ([bb7eeaf](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/bb7eeaf))
+
 ## <small>8.0.135 (2025-11-12)</small>
 
 * chore(auto-upgrade): Upgrade Tests Passed [auto-merge] ([410faf4](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/410faf4))
