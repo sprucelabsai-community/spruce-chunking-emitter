@@ -1,3 +1,7 @@
+## 9.0.0 (2026-01-07)
+
+* major: upgrade ([53f68d3](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/53f68d3))
+
 ## <small>8.0.166 (2026-01-07)</small>
 
 * chore(auto-upgrade): Upgrade Tests Passed [auto-merge] ([95791a9](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/95791a9))
