@@ -1,3 +1,8 @@
+## <small>10.0.7 (2026-02-18)</small>
+
+* chore(auto-upgrade): Upgrade Tests Passed [auto-merge] ([4017224](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/4017224))
+* chore(auto-upgrade): upgraded packages [upgrade-all] ([42c738c](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/42c738c))
+
 ## <small>10.0.6 (2026-02-18)</small>
 
 * patch: upgrade dependencies and fix lint errors ([4098b5a](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/4098b5a))
