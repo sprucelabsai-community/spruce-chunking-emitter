@@ -1,3 +1,8 @@
+## <small>10.0.10 (2026-02-18)</small>
+
+* chore(auto-upgrade): Upgrade Tests Passed [auto-merge] ([61b903c](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/61b903c))
+* chore(auto-upgrade): upgraded packages [upgrade-all] ([50b833d](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/50b833d))
+
 ## <small>10.0.9 (2026-02-18)</small>
 
 * chore(auto-upgrade): Upgrade Tests Passed [auto-merge] ([66b9c8d](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/66b9c8d))
