@@ -1,3 +1,7 @@
+## <small>10.0.23 (2026-04-09)</small>
+
+* chore: upgrade to TypeScript 6 and fix tsconfig compatibility ([74bc25d](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/74bc25d))
+
 ## <small>10.0.22 (2026-03-13)</small>
 
 * chore(auto-upgrade): Upgrade Tests Passed [auto-merge] ([49bd355](https://github.com/sprucelabsai-community/spruce-chunking-emitter/commit/49bd355))
